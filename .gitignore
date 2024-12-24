@@ -1,0 +1,57 @@
+# transient data
+data/run_data
+
+# Byte-compiled files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment directories
+env/
+venv/
+*venv
+
+# Distribution / packaging
+*.egg
+*.egg-info/
+dist/
+build/
+*.egg-info/
+
+# Logs and local database files
+*.log
+*.sqlite3
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+*.py,cover
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# PyInstaller files
+*.spec
+
+# macOS system files
+.DS_Store
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Docker
+*.pid
+*.sock

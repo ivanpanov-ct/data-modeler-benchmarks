@@ -1,0 +1,241 @@
+{
+    "key": "auto-type-product-type",
+    "name": "Auto Part",
+    "description": "Generic product type for auto parts",
+    "attributes": [
+        {
+            "name": "auto-part-manufacturer",
+            "label": {
+                "en": "Manufactorer"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-material",
+            "label": {
+                "en": "Material"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-weight",
+            "label": {
+                "en": "Weight"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "number"
+            },
+            "attributeConstraint": "None"
+        },
+        {
+            "name": "auto-part-dimensions",
+            "label": {
+                "en": "Dimensions"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "None"
+        },
+        {
+            "name": "auto-part-warranty-months",
+            "label": {
+                "en": "Warranty (Months)"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "number"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-compatibility",
+            "label": {
+                "en": "Compatibility"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-safety-rating",
+            "label": {
+                "en": "Safety rating"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "number"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-color",
+            "label": {
+                "en": "Color"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-production-date",
+            "label": {
+                "en": "auto-part-production-date"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "date"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-country-of-origin",
+            "label": {
+                "en": "Country of origin"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-installation-difficulty",
+            "label": {
+                "en": "Installation difficulty"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "enum",
+                "values": [
+                    {
+                        "key": "easy",
+                        "label": "Easy"
+                    },
+                    {
+                        "key": "moderate",
+                        "label": "Moderate"
+                    },
+                    {
+                        "key": "difficult",
+                        "label": "Difficult"
+                    }
+                ]
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-maintenance-schedule",
+            "label": {
+                "en": "Maintenance schedule"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-environmental-impact",
+            "label": {
+                "en": "Environmental impact"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-certification",
+            "label": {
+                "en": "Certification"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-user-ratings",
+            "label": {
+                "en": "User Ratings"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-upc-code",
+            "label": {
+                "en": "UPC code"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-tariff-rate",
+            "label": {
+                "en": "Tariff Rate (%)"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "number"
+            },
+            "attributeConstraint": "SameForAll"
+        },
+        {
+            "name": "auto-part-size",
+            "label": {
+                "en": "Size"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "None"
+        },
+        {
+            "name": "auto-part-model",
+            "label": {
+                "en": "Model"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "None"
+        },
+        {
+            "name": "auto-part-price-adjustment",
+            "label": {
+                "en": "Price Adjustment (USD)"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "number"
+            },
+            "attributeConstraint": "None"
+        }
+    ]
+}
