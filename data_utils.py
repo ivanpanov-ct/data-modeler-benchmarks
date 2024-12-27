@@ -52,7 +52,8 @@ def create_run_data_object(run_folder_path):
         sample_data_path = f"{input_path}/sample_data"
         parameters = read_json_from_file(f"{input_path}/input_params.json")
     
-        input_files = os.listdir(sample_data_path) #FIXME
+        input_files = [os.path.join(sample_data_path, file) for file in os.listdir(sample_data_path)] #os.listdir(sample_data_path) #FIXME
+
         conversation_data_path = None #FIXME
         conversation = {"parameters": parameters, "input_files": input_files, "data_path": conversation_data_path}
         conversations.append(conversation)

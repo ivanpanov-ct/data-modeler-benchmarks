@@ -66,5 +66,10 @@ TODO
 (if you haven't create the environment yet) python3 -m venv dme-venv
 source dme-venv/bin/activate
 
+## Setup Google Cloud credentials
+- create a key for LLM Service Account (https://console.cloud.google.com/iam-admin/serviceaccounts/details/113288978936219270482?hl=en&inv=1&invt=AblLNQ&project=ctp-vertex-sandbox)
+- download this key and store in local holder
+- set the following environment variable 'export GOOGLE_APPLICATION_CREDENTIALS="path-to-service-account-key/my-key.json"'
+
 ## Install dependencies
 pip install -r requirements.txt
