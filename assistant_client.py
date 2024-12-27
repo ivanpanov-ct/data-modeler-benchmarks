@@ -40,14 +40,6 @@ def send_request_to_assistant(input_files, parameters):
     
     request_data = json.dumps(build_llm_map_request(input_files, parameters))
 
-    with open('dummy-req.txt', "w") as file:
-        # Write the string to the file
-        file.write(dummy_request)
-
-    with open('real-req.txt', "w") as file:
-        # Write the string to the file
-        file.write(request_data)
-
     response = requests.post(LLM_SERVICE_URL + "/map", data=request_data, headers=auth_headers)
     response.raise_for_status()
 
