@@ -54,7 +54,6 @@ def create_run_data_object(run_folder_path):
     
         input_files = [os.path.join(sample_data_path, file) for file in os.listdir(sample_data_path)] #os.listdir(sample_data_path) #FIXME
 
-        conversation_data_path = None #FIXME
         conversation = {"parameters": parameters, "input_files": input_files, "data_path": conversation_data_path}
         conversations.append(conversation)
 
@@ -103,4 +102,12 @@ def read_json_from_file(file_path):
     return data
 
 def persist_assistant_output(conversation, data_model, comment):
-    pass
+    conversation_data_path = conversation['data_path']
+    output_path = conversation_data_path + '/real-output'
+    os.makedirs(output_path, exist_ok=True)
+
+    with open(f"{output_path}/data-model.json", "w") as file:
+        file.write(data_model)
+
+    with open(f"{output_path}/comment.md", "w") as file:
+        file.write(comment)
