@@ -103,7 +103,7 @@ def read_json_from_file(file_path):
 
 def persist_assistant_output(conversation, data_model, comment):
     conversation_data_path = conversation['data_path']
-    output_path = conversation_data_path + '/real-output'
+    output_path = conversation_data_path + '/generated_output'
     os.makedirs(output_path, exist_ok=True)
 
     with open(f"{output_path}/data-model.json", "w") as file:
