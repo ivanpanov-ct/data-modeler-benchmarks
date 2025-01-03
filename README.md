@@ -44,11 +44,11 @@ TODO test granularity
 
 ## Scoring
 ### Scoring of individual run evaluation
-1 - the result is an absolute non-sense
-2 - the result has a few parts that make sense, but is mostly wrong and is hardly helpful in practice
-3 - the result has some correct parts, but also some significant mistakes. Might be partially helpful for some cases.
-4 - the result is mostly correct, but there minor improvement possibilities
-5 - the result totally matches the expectation
+1. the result is an absolute non-sense
+2. the result has a few parts that make sense, but is mostly wrong and is hardly helpful in practice
+3. the result has some correct parts, but also some significant mistakes. Might be partially helpful for some cases.
+4. the result is mostly correct, but there minor improvement possibilities
+5. the result totally matches the expectation
 
 ### Scoring of whole dataset evalutation
 total score = average(results of individual run) #FIXME we need to come up with a better formula that reflects the actual business goals (is it more important to get certain percentage of ideal results? is it more important to get rid on non-sense? are mediocre results acceptable? etc.)
