@@ -1,4 +1,4 @@
-# DRAFT (this do is just an inspiration for future implementation)
+# DRAFT (this text is just an inspiration for future implementation)
 ## Usage
 dmb --auto - run benchmark fully automated (AI will compare the expected outputs with the real ones and give a score)
 dmb --human - run benchmark with human evaluation (a human will compare expected outputs with the real ones and give a score)
