@@ -1,0 +1,4 @@
+WHEN the assistant is provided with categories hierarchy and list of attribute for every category
+AND some categories share attributes
+AND granularity is 2
+THEN the assistant merges categories sharing more than 60% of attributes in one data type 

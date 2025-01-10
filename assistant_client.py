@@ -24,8 +24,8 @@ GENERATION_CONFIG = json.loads('{"max_output_tokens": 8192, "temperature": 0, "t
 def run_assistant_requests(run_data):
     """Feed every piece of test data to the assistant and persist the assistant output"""
 
-    # TODO run requests in parallel
-    for conversation_data in run_data["conversations"]:
+    # TODO run cases in parallel
+    for conversation_data in run_data["conversations"]: 
         input_files = conversation_data["input_files"]
         parameters = conversation_data["parameters"]
         data_model, comment = send_request_to_assistant(input_files, parameters)
@@ -62,7 +62,8 @@ def get_result_of_a_job(job_id, auth_headers):
             break
         elif status == "failed":
             error_message = status_data["error"]
-            #st.error("Job failed. Please check the backend logs for details.")
+            print("Job failed:")
+            print(error_message)
             break
         time.sleep(WAITING_TIME) 
 

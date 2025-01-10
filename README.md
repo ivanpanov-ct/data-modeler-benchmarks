@@ -1,12 +1,10 @@
 # DRAFT (this do is just an inspiration for future implementation)
 ## Usage
-dmb --auto - run benchmark fully automated (AI will compare the expected outputs with the real ones and give a score)
-dmb --human - run benchmark with human evaluation (a human will compare expected outputs with the real ones and give a score)
-dmb --hybrid - run human + AI evaluation (AI tries compare the expected outputs with the real ones. For easy cases it give a score, for less obvious ones the evaluation will is handed over to a human)
+python main.py
 
 ## Setup
 ### Activate virtual environment
-(if you haven't create the environment yet) python3 -m venv dme-venv
+(if you haven't create the environment yet) python -m venv dme-venv
 source dme-venv/bin/activate
 
 ### Setup Google Cloud credentials
@@ -36,8 +34,11 @@ Data of a single execution contains a copy of the whole ground truth data. In ad
 Run data is treated as transient (is not versioned together with the code)
 
 ## Cases design 
+Assumptions:
+- we focus on optimizing first output (i.e. optimizing quality of feedback conversation is out of scope for now)
+- we focus on optimizing JSON output (i.e. markdown text is out of scope for now)
+
 TODO scaling edge cases (too many attributes, to many variants, to many products for model to grasp)
-TODO cases with feedback
 TODO positive and negative examples
 TODO cases with multiple valid outputs
 TODO test granularity 
@@ -52,3 +53,9 @@ TODO test granularity
 
 ### Scoring of whole dataset evalutation
 total score = average(results of individual run) #FIXME we need to come up with a better formula that reflects the actual business goals (is it more important to get certain percentage of ideal results? is it more important to get rid on non-sense? are mediocre results acceptable? etc.)
+
+## Future Usage
+benchmark --auto - run benchmark fully automated (AI will compare the expected outputs with the real ones and give a score)
+benchmark --human - run benchmark with human evaluation (a human will compare expected outputs with the real ones and give a score)
+benchmark --hybrid - run human + AI evaluation (AI tries compare the expected outputs with the real ones. For easy cases it give a score, for less obvious ones the evaluation will is handed over to a human)
+benchmark --score - 

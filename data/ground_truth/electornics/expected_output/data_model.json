@@ -1,0 +1,69 @@
+[{
+    "key": "hardware-product-type",
+    "name": "Hardware,, iii) Storage, iv) Virtual",
+    "description": "TODO",
+    "attributes": [
+        {
+            "name": "TODO",
+            "label": {
+                "en": "TODO"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        }
+    ]
+},{
+    "key": "computers-product-type",
+    "name": "Computers",
+    "description": "TODO",
+    "attributes": [
+        {
+            "name": "TODO",
+            "label": {
+                "en": "TODO"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        }
+    ]
+}, {
+    "key": "storage-product-type",
+    "name": "Storage, iv) Virtual",
+    "description": "TODO",
+    "attributes": [
+        {
+            "name": "TODO",
+            "label": {
+                "en": "TODO"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        }
+    ]
+}, {
+    "key": "virtual-product-type",
+    "name": "Virtual",
+    "description": "TODO",
+    "attributes": [
+        {
+            "name": "TODO",
+            "label": {
+                "en": "TODO"
+            },
+            "isRequired": false,
+            "type": {
+                "name": "text"
+            },
+            "attributeConstraint": "SameForAll"
+        }
+    ]
+}]
