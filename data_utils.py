@@ -39,6 +39,7 @@ def get_max_numeric(filenames):
         print("No numeric values found in the list.")
         return None
 
+# TODO conversations to cases
 def create_run_data_object(run_folder_path):
     conversations = []
     conversation_folders = os.listdir(run_folder_path)

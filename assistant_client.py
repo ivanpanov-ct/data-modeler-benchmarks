@@ -1,9 +1,9 @@
+import httpx
+import asyncio
 from data_utils import persist_assistant_output
 import google.oauth2.id_token
 import google.auth.transport.requests
-import requests
 import json
-import time
 import base64
 import os
 
@@ -21,44 +21,53 @@ USE_SAMPLE_FOR_FEEDBACK = False
 GENERATION_CONFIG = json.loads('{"max_output_tokens": 8192, "temperature": 0, "top_p": 0.9}')
 
 def run_cases(run_data):
-    """Feed every piece of test data to the assistant and persist the assistant output"""
+    cases = run_data["conversations"]
+    loop = asyncio.new_event_loop()
+    tasks  = [loop.create_task(run_case(case)) for case in cases]
+    loop.run_until_complete(asyncio.wait(tasks))
+    loop.close()
 
-    # TODO run cases in parallel
-    for conversation_data in run_data["conversations"]: 
-        input_files = conversation_data["input_files"]
-        parameters = conversation_data["parameters"]
-        data_model, comment, error = generate_data_model(input_files, parameters)
-        persist_assistant_output(conversation_data, data_model, comment, error)
+async def run_case(case):
+    input_files = case["input_files"]
+    parameters = case["parameters"]
+    data_model, comment, error = await generate_data_model(input_files, parameters)
+    persist_assistant_output(case, data_model, comment, error)   
 
-def generate_data_model(input_files, parameters):
+async def generate_data_model(input_files, parameters):
     print (f"sending request to assistant {input_files}, {parameters}")
 
     auth_headers = get_llm_service_auth_headers()
-    #request_data = dummy_request 
     
     request_data = json.dumps(build_llm_map_request(input_files, parameters))
 
-    response = requests.post(LLM_SERVICE_URL + "/map", data=request_data, headers=auth_headers)
-    response.raise_for_status()
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            LLM_SERVICE_URL + "/map",
+            data=request_data,
+            headers=auth_headers
+        )
+        response.raise_for_status()
+        job_id = response.json()["job_id"]
 
-    job_id = response.json()["job_id"]
+    return await get_result_of_a_job(job_id, auth_headers)
 
-    return get_result_of_a_job(job_id, auth_headers)
+async def get_result_of_a_job(job_id, auth_headers):
+    WAITING_TIME = 10
 
-def get_result_of_a_job(job_id, auth_headers):
     comment = None 
     data_model_json = None 
     error = None
     
-    WAITING_TIME = 10
     status = None
     while True:
-        status_response = requests.get(LLM_SERVICE_URL + f"/status/{job_id}?bucket_name=" + BUCKET_NAME, headers=auth_headers)
-        print('polling')
-        status_response.raise_for_status()
-        status_data = status_response.json()
-        status = status_data["status"]
-        #status = status_response.json()["status"]
+        async with httpx.AsyncClient() as client:
+            status_url = f"{LLM_SERVICE_URL}/status/{job_id}?bucket_name={BUCKET_NAME}"
+            print(f"Polling. Job id: {job_id}")
+            response = await client.get(status_url, headers=auth_headers)
+            response.raise_for_status()
+            status_data = response.json()
+            status = status_data["status"]
+
         if status == "completed":
             break
         elif status == "failed":
@@ -66,25 +75,25 @@ def get_result_of_a_job(job_id, auth_headers):
             error = f'Job failed:{error_message}'
             print(error)
             break
-        time.sleep(WAITING_TIME) 
+        await asyncio.sleep(WAITING_TIME) 
 
-    # Retrieve results
     if status == "completed":
         try:
-            results_response = requests.get(LLM_SERVICE_URL + f"/results/{job_id}?bucket_name=" + BUCKET_NAME, headers=auth_headers)
-            results_response.raise_for_status()
-            if results_response == "failed":
-                pass
-                #raise Exception("Job failed. Please check the backend logs for details.")
-            else:
-                results = results_response.json()
-                comment = results.get("markdown")
-                comment = comment.replace("```markdown", "").replace("```", "") 
-                data_model_json = results.get("json_content")
-                #csv_content = results.get("csv_content")
+            async with httpx.AsyncClient() as client:
+                results_url = f"{LLM_SERVICE_URL}/results/{job_id}?bucket_name={BUCKET_NAME}"
+                response = await client.get(results_url, headers=auth_headers)
+                response.raise_for_status()
+
+                if response.text == "failed":
+                    pass
+                else:
+                    results = response.json()
+                    comment = results.get("markdown")
+                    comment = comment.replace("```markdown", "").replace("```", "")
+                    data_model_json = results.get("json_content", "")
+            
         except Exception as e:
             error = f"An unexpected error occurred: {e}"
-            #Exception(f"An unexpected error occurred: {e}") 
     
     return data_model_json, comment, error
 
