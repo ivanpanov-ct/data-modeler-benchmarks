@@ -101,13 +101,17 @@ def read_json_from_file(file_path):
     
     return data
 
-def persist_assistant_output(conversation, data_model, comment):
+def persist_assistant_output(conversation, data_model, comment, error):
     conversation_data_path = conversation['data_path']
     output_path = conversation_data_path + '/generated_output'
     os.makedirs(output_path, exist_ok=True)
 
-    with open(f"{output_path}/data-model.json", "w") as file:
-        file.write(data_model)
+    if error:
+        with open(f"{output_path}/error.txt", "w") as file:
+            file.write(error)
+    else:
+        with open(f"{output_path}/data-model.json", "w") as file:
+            file.write(data_model)
 
-    with open(f"{output_path}/comment.md", "w") as file:
-        file.write(comment)
+        with open(f"{output_path}/comment.md", "w") as file:
+            file.write(comment)

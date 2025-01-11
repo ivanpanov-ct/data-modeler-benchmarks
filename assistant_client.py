@@ -20,19 +20,17 @@ SERVICE_ACCOUNT_EMAIL = "sa-llm-service@ctp-vertex-sandbox.iam.gserviceaccount.c
 USE_SAMPLE_FOR_FEEDBACK = False
 GENERATION_CONFIG = json.loads('{"max_output_tokens": 8192, "temperature": 0, "top_p": 0.9}')
 
-# TODO run -> evaluation_run or evaluation; run vs conversation into -> docs
-def run_assistant_requests(run_data):
+def run_cases(run_data):
     """Feed every piece of test data to the assistant and persist the assistant output"""
 
     # TODO run cases in parallel
     for conversation_data in run_data["conversations"]: 
         input_files = conversation_data["input_files"]
         parameters = conversation_data["parameters"]
-        data_model, comment = send_request_to_assistant(input_files, parameters)
-        persist_assistant_output(conversation_data, data_model, comment)
-        pass
+        data_model, comment, error = generate_data_model(input_files, parameters)
+        persist_assistant_output(conversation_data, data_model, comment, error)
 
-def send_request_to_assistant(input_files, parameters):
+def generate_data_model(input_files, parameters):
     print (f"sending request to assistant {input_files}, {parameters}")
 
     auth_headers = get_llm_service_auth_headers()
@@ -48,9 +46,12 @@ def send_request_to_assistant(input_files, parameters):
     return get_result_of_a_job(job_id, auth_headers)
 
 def get_result_of_a_job(job_id, auth_headers):
+    comment = None 
+    data_model_json = None 
+    error = None
+    
     WAITING_TIME = 10
     status = None
-    result = None
     while True:
         status_response = requests.get(LLM_SERVICE_URL + f"/status/{job_id}?bucket_name=" + BUCKET_NAME, headers=auth_headers)
         print('polling')
@@ -62,8 +63,8 @@ def get_result_of_a_job(job_id, auth_headers):
             break
         elif status == "failed":
             error_message = status_data["error"]
-            print("Job failed:")
-            print(error_message)
+            error = f'Job failed:{error_message}'
+            print(error)
             break
         time.sleep(WAITING_TIME) 
 
@@ -73,17 +74,19 @@ def get_result_of_a_job(job_id, auth_headers):
             results_response = requests.get(LLM_SERVICE_URL + f"/results/{job_id}?bucket_name=" + BUCKET_NAME, headers=auth_headers)
             results_response.raise_for_status()
             if results_response == "failed":
-                raise Exception("Job failed. Please check the backend logs for details.")
+                pass
+                #raise Exception("Job failed. Please check the backend logs for details.")
             else:
                 results = results_response.json()
                 comment = results.get("markdown")
                 comment = comment.replace("```markdown", "").replace("```", "") 
                 data_model_json = results.get("json_content")
-                csv_content = results.get("csv_content")
+                #csv_content = results.get("csv_content")
         except Exception as e:
-            Exception(f"An unexpected error occurred: {e}") 
+            error = f"An unexpected error occurred: {e}"
+            #Exception(f"An unexpected error occurred: {e}") 
     
-    return data_model_json, comment
+    return data_model_json, comment, error
 
 def get_llm_service_auth_headers():
     auth_req = google.auth.transport.requests.Request()
@@ -145,13 +148,3 @@ def get_sample_data(input_files):
                 sample_data = {"content": bytes_data.decode(), "name": file_name} 
         
     return sample_data
-
-
-def parse_assistant_response(assistant_response):
-    pass
-
-
-def tmp():
-
-    
-    pass
