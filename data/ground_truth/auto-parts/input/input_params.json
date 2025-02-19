@@ -4,5 +4,6 @@
     "mandatoryAttrs": "",
     "searchableAttrs": "",
     "localizedAttrs":"",
-    "predefinedValsAttrs":""
+    "predefinedValsAttrs":"",
+    "granularity": "2"
 }

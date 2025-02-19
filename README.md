@@ -57,5 +57,5 @@ total score = average(results of individual run) #FIXME we need to come up with 
 benchmark --auto - run benchmark fully automated (AI will compare the expected outputs with the real ones and give a score)
 benchmark --human - run benchmark with human evaluation (a human will compare expected outputs with the real ones and give a score)
 benchmark --hybrid - run human + AI evaluation (AI tries compare the expected outputs with the real ones. For easy cases it give a score, for less obvious ones the evaluation will is handed over to a human)
-benchmark --score - 
+benchmark --score - calculate overall score of the run
 

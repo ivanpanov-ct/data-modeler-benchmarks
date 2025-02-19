@@ -49,9 +49,9 @@ async def generate_data_model(input_files, parameters):
         response.raise_for_status()
         job_id = response.json()["job_id"]
 
-    return await get_result_of_a_job(job_id, auth_headers)
+    return await get_job_result(job_id, auth_headers)
 
-async def get_result_of_a_job(job_id, auth_headers):
+async def get_job_result(job_id, auth_headers):
     WAITING_TIME = 10
 
     comment = None 
@@ -75,6 +75,7 @@ async def get_result_of_a_job(job_id, auth_headers):
             error = f'Job failed:{error_message}'
             print(error)
             break
+        
         await asyncio.sleep(WAITING_TIME) 
 
     if status == "completed":
@@ -85,7 +86,7 @@ async def get_result_of_a_job(job_id, auth_headers):
                 response.raise_for_status()
 
                 if response.text == "failed":
-                    pass
+                    pass # TODO
                 else:
                     results = response.json()
                     comment = results.get("markdown")
@@ -101,7 +102,6 @@ def get_llm_service_auth_headers():
     auth_req = google.auth.transport.requests.Request()
     id_token = google.oauth2.id_token.fetch_id_token(auth_req, LLM_SERVICE_URL)
     return {'Authorization': f'Bearer {id_token}'}
-
 
 def build_llm_map_request(input_files, parameters):
     sample_data = get_sample_data(input_files)
